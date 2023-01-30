@@ -1,6 +1,6 @@
 @echo off
 
-set intro=true
+set intro=false
 if %intro% EQU true (
 echo Cambia le prime righe del codice per impostare i percorsi vari
 echo dopo elimina queste 4 righe di codice 
@@ -13,17 +13,19 @@ goto :EOF
 )
 
 REM Variabili da cambiare
-set TecnProg=Z:\TecnProg
-set Informatica=Z:\Informatica
+set TecnProg="C:\Users\andrea.castronovo\Desktop\TecnProg"
+set Informatica="C:\Users\andrea.castronovo\Desktop\Informatica"
 set git=false
+set chiudiVisualStudio=true
 
 REM Variabile da non cambiare
 set data=%date:~6%-%date:~3,2%-%date:~0,2%
 
 REM Chiedi il percorso
 :promptPercorso
-set /p percorso=Inserisci il percorso da consegnare --^> 
+set /p percorso=Inserisci il percorso da consegnare senza virgolette anche se ci sono spazi --^> 
 if not exist "%percorso%" ( echo Il percorso non esiste & goto :promptPercorso )
+
 
 REM Chiedi che materia è da consegnare
 :promptMateria
@@ -34,6 +36,11 @@ if not %materia% EQU tps (
       goto :promptMateria
    )
 )
+
+REM Chiudi VisualStudio
+if chiudiVisualStudio EQU false goto :promptMateria
+tasklist /fi "imagename eq devenv.exe" | find ":" > nul
+if errorlevel 1 taskkill /F /IM "devenv.exe"
 
 cd /D "%percorso%"
 

@@ -13,9 +13,9 @@ goto :EOF
 )
 
 REM Variabili da cambiare
-set TecnProg="C:\Users\andrea.castronovo\Desktop\TecnProg"
-set Informatica="C:\Users\andrea.castronovo\Desktop\Informatica"
-set git=false
+set TecnProg=Z:\TecnProg
+set Informatica=Z:\Informatica
+set git=true
 set chiudiVisualStudio=true
 
 REM Variabile da non cambiare

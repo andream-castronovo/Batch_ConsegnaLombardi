@@ -16,7 +16,6 @@ REM Variabili da cambiare
 set TecnProg=Z:\TecnProg
 set Informatica=Z:\Informatica
 set git=true
-set chiudiVisualStudio=true
 
 REM Variabile da non cambiare
 set data=%date:~6%-%date:~3,2%-%date:~0,2%
@@ -37,15 +36,14 @@ if not %materia% EQU tps (
    )
 )
 
-REM Chiudi VisualStudio
-if chiudiVisualStudio EQU false goto :promptMateria
-tasklist /fi "imagename eq devenv.exe" | find ":" > nul
-if errorlevel 1 taskkill /F /IM "devenv.exe"
-
 cd /D "%percorso%"
 
 REM Elimina tutte le cartelle bin/ obj/ e .vs/ ed il loro contenuto
 :binobjvs
+:controlloVS
+tasklist /fi "imagename eq devenv.exe" | find ":" > nul
+if errorlevel 1 echo Chiudi VisualStudio. & pause & goto :controlloVS
+
 FOR /d /r . %%d IN (bin) DO @IF EXIST "%%d" rd /s /q "%%d"
 FOR /d /r . %%d IN (obj) DO @IF EXIST "%%d" rd /s /q "%%d"
 FOR /d /r . %%d IN (.vs) DO @IF EXIST "%%d" rd /s /q "%%d"

@@ -40,10 +40,14 @@ cd /D "%percorso%"
 
 REM Elimina tutte le cartelle bin/ obj/ e .vs/ ed il loro contenuto
 :binobjvs
+
+REM Controlla che Visual Studio sia chiudo
 :controlloVS
+
 tasklist /fi "imagename eq devenv.exe" | find ":" > nul
 if errorlevel 1 echo Chiudi VisualStudio. & pause & goto :controlloVS
 
+REM Cancella le cartelle bin, obj e .vs
 FOR /d /r . %%d IN (bin) DO @IF EXIST "%%d" rd /s /q "%%d"
 FOR /d /r . %%d IN (obj) DO @IF EXIST "%%d" rd /s /q "%%d"
 FOR /d /r . %%d IN (.vs) DO @IF EXIST "%%d" rd /s /q "%%d"
